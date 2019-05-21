@@ -646,10 +646,10 @@ bool:SpawnFakeClientAndTeleport()
 	return fakeclientKicked
 }
 
-bool:HasIdlePlayer(bot)
+bool HasIdlePlayer(int bot)
 {
 	if(!IsFakeClient(bot))
-		return false
+		return false;
 	
 	if(IsClientConnected(bot) && IsClientInGame(bot))
 	{
@@ -657,16 +657,16 @@ bool:HasIdlePlayer(bot)
 		{
 			if(IsFakeClient(bot))
 			{
-				new client = GetClientOfUserId(GetEntProp(bot, Prop_Send, "m_humanSpectatorUserID"))			
+				int client = GetClientOfUserId(GetEntProp(bot, Prop_Send, "m_humanSpectatorUserID"))
 				if(client)
 				{
-					if(!IsFakeClient(client) && (GetClientTeam(client) == TEAM_SPECTATORS))
-						return true
+					if(!IsFakeClient(client) && IsClientInGame(client))
+						return GetClientTeam(client) == TEAM_SPECTATORS;
 				}
 			}
 		}
 	}
-	return false
+	return false;
 }
 
 bool:IsClientIdle(client)
